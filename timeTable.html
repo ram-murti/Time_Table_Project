@@ -1,0 +1,466 @@
+<html>
+    <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <title>Bootstrap 101 Template</title>
+        
+            <!-- Bootstrap -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <style>
+        </style>
+        <script type="text/javascript">
+        var teacherDetail=[];
+        var selectedSubject;
+        var  selectedTeacher;
+        var selectSlotA;
+        var selectSlotB;
+        var selectedClass
+        var classADetails=[];
+        var classBDetails=[];
+        function saveTeacherDetail(){
+                 var name=document.getElementById('Name').value;
+                  var length=document.getElementsByClassName('custom');
+                  var sub=[];
+                  console.log(name);
+                  console.log(length);
+                  for(var i=1;i<=length.length;i++){
+                      if(document.getElementById(i).checked){
+                       var subject=document.getElementById(i).value;
+                           sub.push(subject);
+                           document.getElementById(i).checked=false}
+                  }
+                  var tDetail={
+                      name:name,
+                      subject:sub
+                  }
+                  teacherDetail.push(tDetail); 
+                  console.log(teacherDetail);                               
+        }
+        var globalArr=[];
+
+        function filteTeacher(subOject){
+            console.log(subOject.value);
+            console.log(selectedClass);
+            console.log(classADetails);
+            console.log(classBDetails);
+        if( classBDetails=="" && classADetails==""){
+            flag=true;
+            var arr=[];
+            var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               selectedSubject=subOject.value;
+               teacherDetail.forEach((teac)=>{
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                               
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+            <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;                               arr.push(subSpecificTeacher);
+                        }
+                     });
+               })
+            console.log(arr);
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+        } 
+        else if(selectedClass=="class A" ) {
+            var flag=true;
+                  if(classBDetails!=""){
+            console.log(selectedClass);
+            console.log("1");
+            classBDetails.forEach((e)=>{
+                if(e.slot==selectSlotA ){
+                    flag=false;
+                    var arr=[];
+            var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               
+               teacherDetail.forEach((teac)=>{
+                       if(e.teacherName!=teac.name){
+                           console.log(teac.name);
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                                
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+                            <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;
+                             arr.push(subSpecificTeacher);
+                        }
+                     });
+               }
+               })
+                  console.log(arr);
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+                
+                } 
+                if(flag==true){
+                    var arr=[];
+            var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               selectedSubject=subOject.value;
+               teacherDetail.forEach((teac)=>{
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                               
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+                             <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;            
+                             arr.push(subSpecificTeacher);
+                        }
+                     });
+               })
+            
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+                }
+            })
+        } 
+        else{
+            var arr=[];
+            var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               selectedSubject=subOject.value;
+               teacherDetail.forEach((teac)=>{
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                               
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+            <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;                               arr.push(subSpecificTeacher);
+                        }
+                     });
+               })
+            console.log(arr);
+            console.log("2");
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+        } 
+        }
+
+        else{
+            if(classADetails!=""){
+            var  flag=true;
+            console.log("B");
+            classADetails.forEach((e)=>{
+                if(e.slot==selectSlotB ){
+                    flag=false;
+                    var arr=[];
+                    var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               
+               teacherDetail.forEach((teac)=>{
+                       if(e.teacherName!=teac.name){
+                           console.log(teac.name);
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                                
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+                                                    <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`; 
+                                          arr.push(subSpecificTeacher);
+                        }
+                     });
+               }
+               })
+                  console.log(arr);
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+                
+                } 
+                if(flag==true){
+                    var arr=[];
+                    var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               selectedSubject=subOject.value;
+               teacherDetail.forEach((teac)=>{
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                               
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+                                                   <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;  
+                                         arr.push(subSpecificTeacher);
+                        }
+                     });
+               })
+            
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+                }
+            })
+        }
+        else{
+            console.log("A");
+            var arr=[];
+            var subSpecificTeacher=`<label for="">Select Teacher Who Is Free And Teach This Subject :</label><br>`;
+              arr.push(subSpecificTeacher);
+               selectedSubject=subOject.value;
+               teacherDetail.forEach((teac)=>{
+                     teac.subject.forEach(element => {
+                        if(element==selectedSubject){
+                               
+                            subSpecificTeacher = ` <input type="radio" value="${teac.name}" class="custom-control-input"onchange="selectTeacher(this)" id="defaultUnchecked" name="teacher ">
+            <label class="custom-control-label" for="defaultUnchecked">${teac.name}</label>`;                               arr.push(subSpecificTeacher);
+                        }
+                     });
+               })
+            console.log(arr);
+            document.getElementById('teacherBasedOnSubject').innerHTML=arr;
+        }
+        }
+        }
+        function selectTeacher(teacherObject){
+                 selectedTeacher=teacherObject.value;
+                 
+                 console.log(selectedTeacher);
+        }
+        function selectSlot(slotObject){
+            if(selectedClass=="class A"){
+               selectSlotA=slotObject.value;
+            
+               console.log(selectSlotA);
+               }
+               if(selectedClass=="class B"){
+                   console.log(classADetails);
+               selectSlotB=slotObject.value;
+            
+             
+        }
+        }
+        function selectClass(classObject){
+             selectedClass=classObject.value;
+             
+             if(selectedClass=='class A'){
+
+             }
+
+        }
+     
+        function assignTeacher(){
+            if(selectedClass=="class A"){
+            var tClassADetail={
+                  subject:selectedSubject,
+                  teacherName:selectedTeacher,
+                  slot:selectSlotA
+            }
+            classADetails.push(tClassADetail);
+            var tse=selectSlotA+'as';
+            var pse=selectSlotA+'pas';
+             console.log(selectedTeacher);
+             var sTeacher="Teacher Alloted-->"+selectedTeacher;
+            document.getElementById(tse).innerHTML=selectedSubject;
+            document.getElementById(pse).innerHTML= sTeacher;
+
+            }
+            else{
+                var tClassBDetail={
+                  subject:selectedSubject,
+                  teacherName:selectedTeacher,
+                  slot:selectSlotB
+            }     
+            classBDetails.push(tClassBDetail);
+            var tse=selectSlotB+'bs';
+            var pse=selectSlotB+'pbs';
+            var sTeacher="Teacher Alloted-->"+selectedTeacher;
+            document.getElementById(tse).innerHTML=selectedSubject;
+            document.getElementById(pse).innerHTML= sTeacher;
+            }
+            
+            document.getElementById("teacherBasedOnSubject").innerHTML="";
+
+        }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AssignTeacher">Assign Teacher</button>  
+        <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#AddTeacher">Add Teacher</button>  
+          <div id="AddTeacher" class="modal fade " role="dialog" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <h1 class="modal-header">Add Teacher
+                          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                      </h1>
+                      <div class="modal-body">
+                           <form action="" role="form">
+                               <div class="form-group">
+                                    <label >Name :</label>
+                                    <input type="text" class="fo" id="Name"><br>
+                                   <label>Subject You Know:</label><br>
+           <div class="custom-control custom-checkbox custom-control-inline">
+        <input type="checkbox" class="custom" value="Java" id="1">
+        <label class="cu" >Java</label>
+        <input type="checkbox" class="custom" value="Html" id="2">
+        <label class="cu" >Html</label>
+        <input type="checkbox" class="custom"value="NodeJs" id="3">
+        <label class="cu" >NodeJs</label>
+        <input type="checkbox" class="custom" value="MySql" id="4">
+        <label class="cu" >MySql</label>
+        <input type="checkbox" class="custom"value="Bootstrap" id="5">
+        <label class="cu" >Bootstrap</label>
+       </div>             
+                               </div>
+                           </form>
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="saveTeacherDetail()">save</button>
+                       </div>
+                    </div>
+              </div>
+          </div>
+  <div id="AssignTeacher" class="modal fade" >
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <h1 class="modal-header">
+                  Assign Teacher
+                  <button type="button" class="close" data-dismiss="modal" >&times;</button>
+
+              </h1>
+              <div class="modal-body">
+                 <form action="" role="form">
+                <!-- Default unchecked -->
+        <div class="custom-control custom-radio" id="class">
+            <label for="">select class :</label><br>
+        <input type="radio" class="custom-control-input" id="defaultUnchecked"onchange="selectClass(this)" value="class A" name="class ">
+        <label class="custom-control-label" for="defaultUnchecked">class A</label>
+        <input type="radio" class="custom-control-input" id="defaultUnchecked"onchange="selectClass(this)" value="class B" name="class ">
+        <label class="custom-control-label" for="defaultUnchecked">class B</label>
+      </div>
+      <div class="custom-control custom-radio" id="slot">
+            <label for="">select slot :</label> <br>
+            <input type="radio" value="8-9" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">8-9 AM</label>
+            <input type="radio"value="9-10" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">9-10 AM</label>
+            <input type="radio" value="10-11" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">10-11 AM</label>
+            <input type="radio" value="11-12" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">11-12 AM</label><br>
+            <input type="radio" value="12-1" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">12-1 PM</label>
+            <input type="radio" value="1-2" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">1-2 PM</label>
+            <input type="radio" value="2-3" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">2-3 PM</label>
+            <input type="radio"value="3-4" class="custom-control-input"onchange="selectSlot(this)" id="defaultUnchecked" name="class1 ">
+            <label class="custom-control-label" for="defaultUnchecked">3-4 PM</label>
+          </div>
+          <div class="custom-control custom-radio" id="class">
+                <label for="">select subject :</label><br>
+            <input type="radio" class="custom-control-input"onchange="filteTeacher(this)" value="Java" name="class2 ">
+            <label class="custom-control-label" for="defaultUnchecked">Java</label>
+            <input type="radio" class="custom-control-input"onchange="filteTeacher(this)" value="Html" name="class2 ">
+            <label class="custom-control-label" for="defaultUnchecked">Html</label>
+            <input type="radio" class="custom-control-input"onchange="filteTeacher(this)" value="NodeJs" name="class2 ">
+            <label class="custom-control-label" for="defaultUnchecked">NodeJs</label>
+            <input type="radio" class="custom-control-input"onchange="filteTeacher(this)" value="MySql" name="class2 ">
+            <label class="custom-control-label" for="defaultUnchecked">MySql</label>
+            <input type="radio" class="custom-control-input"onchange="filteTeacher(this)" value="Bootstrap" name="class2 ">
+            <label class="custom-control-label" for="defaultUnchecked">Bootstrap</label>
+        </div>
+          <div class="custom-control custom-radio" id="teacherBasedOnSubject" >
+           
+          </div>  
+            </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="assignTeacher()">Assign Teacher</button>
+              </div>
+          </div>
+      </div>
+    
+    
+  </div>
+  <h2>Time Table</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+          <th>Class</th>
+        <th>8-9 AM</th>
+        <th>9-10 AM</th>
+        <th>10-11 AM</th>
+        <th>11-12 AM</th>
+        <th>12-1 PM</th>
+        <th>1-2 PM</th>
+        <th>2-3 PM</th>
+        <th>3-4 PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><h1>Class A</h1></td> 
+       <td><h3 id="8-9as"><h3><h4 id="8-9pas"></h4></td>
+       <td><h3 id="9-10as"></h3><h4 id="9-10pas"></h4></td>
+       <td><h3 id="10-11as"></h3><h4 id="10-11pas"></h4></td>
+       <td><h3 id="11-12as"></h3><h4 id="11-12pas"></h4></td>
+       <td><h3 id="12-1as"></h3><h4 id="12-1pas"></h4></td>
+       <td><h3 id="1-2as"> </h3><h4 id="1-2pas"></h4></td>
+       <td><h3 id="2-3as"></h3><h4 id="2-3pas"></h4></td>
+       <td><h3 id="3-4as"></h3><h4 id="3-4pas"></h4></td>
+       
+      </tr>
+      <tr>
+          <td><h1>Class B</h1></td>
+          <td><h3 id="8-9bs"></h3><h4 id="8-9pbs"></h4></td>
+          <td><h3 id="9-10bs"></h3><h4 id="9-10pbs"></h4></td>
+          <td><h3 id="10-11bs"></h3><h4 id="10-11pbs"></h4></td>
+          <td><h3 id="11-12bs"></h3><h4 id="11-12pbs"></h4></td>
+          <td><h3 id="12-1bs"></h3><h4 d="12-1pbs"></h4></td>
+          <td><h3 id="1-2bs"></h3><h4 id="1-2pbs"></h4> </td>
+          <td><h3 id="2-3bs"></h3><h4 id="2-3pbs"></h4></td>
+          <td><h3 id="3-4bs"></h3><h4 id="3-4pbs"></h4></td>
+      </tr>
+    </tbody>
+  </table>
+        </div>    
+        <!--
+            <p>Full name</p>
+        <input type="text" placeholder="enter yyour good name" id="name">
+        <p>select subject you want to teach</p>
+        <form >
+        <input type="checkbox" value="Javascript" name="subject"id="1">Javascript</input>
+        <input type="checkbox" value="NodeJs"name="subject" id="2">NodeJs</input>
+        <input type="checkbox" value="MySql" name="subject"id="3">MySql</input>
+        <input type="checkbox" value="Spring"name="subject" id="4">Spring</input>
+        <input type="button" value="save"onclick="saveTeacherDetail()"></input>
+    </form>
+    <div id='choseClass' >
+            <select name="" id="class" onchange="selectClass(this)">
+                 <option value="" >select class</option>
+                <option value="class A">class A</option>
+                <option value="class B">class B</option>
+         
+            </select><br></div>
+            <div id="slot" >
+                    <select name="" id="slot1" onchange="selectSlot(this)" >
+                            <option value="">select slot</option>
+                            <option value="8-9">8-9</option>
+                            <option value="9-10">9-10</option>
+                            <option value="10-11">10-11</option>
+                            <option value="11-12">11-12</option>
+                            <option value="12-1">12-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-4">3-4</option>
+                    </select>
+                </div>
+    <select  id="subject" onchange="filteTeacher(this)">
+        <option value="">Select Subject</option>
+        <option value="Javascript">Javascript</option>
+        <option value="NodeJs">NodeJs</option>
+        <option value="MySql">Mysql</option>
+        <option value="Spring">Spring</option>
+
+    </select>
+    <div id="block" >
+    <select name="" id="teacherBasedOnSubject" onchange="selectTeacher(this)" >
+    </select>
+</div>
+
+   
+    <button id="assign" onclick="assignTeacher()">submit</button>             
+</div>-->
+    </body>
+</html>
